@@ -6,7 +6,7 @@ import CardType from '../card-type/card-type';
 import PropTypes from 'prop-types';
 
 function BurgerIngredients() {
-  const [current, setCurrent] = useState('one');
+  const [current, setCurrent] = useState('buns');
   const bun = data.filter(item => item.type === 'bun');
   const main = data.filter(item => item.type === 'main');
   const sauce = data.filter(item => item.type === 'sauce');
@@ -19,9 +19,9 @@ function BurgerIngredients() {
     <div>
       <h1 className={`mb-5 mt-10 text text_type_main-large ${burgerIngredientsStyles.title}`}>Соберите бургер</h1>
       <div className={burgerIngredientsStyles.menu}>
-        <Tab value="one" active={current === 'one'} onClick={() => handleTabClick('one')}>Булки</Tab>
-        <Tab value="two" active={current === 'two'} onClick={() => handleTabClick('two')}>Соусы</Tab>
-        <Tab value="three" active={current === 'three'} onClick={() => handleTabClick('three')}>Начинки</Tab>
+        <Tab value="buns" active={current === 'buns'} onClick={() => handleTabClick('buns')}>Булки</Tab>
+        <Tab value="sauses" active={current === 'sauses'} onClick={() => handleTabClick('sauses')}>Соусы</Tab>
+        <Tab value="mains" active={current === 'mains'} onClick={() => handleTabClick('mains')}>Начинки</Tab>
       </div>
       <div className={`custom-scroll ${burgerIngredientsStyles.container}`}>
         <CardType data={bun} title="Булки" />
