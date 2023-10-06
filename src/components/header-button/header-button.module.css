@@ -1,0 +1,10 @@
+.container {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  display: flex;
+  padding: 16px 20px;
+  gap: 8px;
+}
