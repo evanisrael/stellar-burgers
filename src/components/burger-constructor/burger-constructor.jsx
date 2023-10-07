@@ -1,7 +1,8 @@
+import React from 'react';
 import burgerConstructorStyles from './burger-constructor.module.css';
-import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerConstructor() {
+function BurgerConstructor({ ingredients }) {
   return (
     <div className={burgerConstructorStyles.block}>
       <div className={`mb-4 pr-2 ${burgerConstructorStyles.card} ${burgerConstructorStyles.locked}`}>
@@ -14,51 +15,20 @@ function BurgerConstructor() {
         />
       </div>
       <ul className={`custom-scroll ${burgerConstructorStyles.list}`}>
-        <li className={`mb-4 pr-2 ${burgerConstructorStyles.card}`}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            isLocked={false}
-            text="Соус традиционный галактический"
-            thumbnail={'https://code.s3.yandex.net/react/code/sauce-03.png'}
-            price={30}
-          />
-        </li>
-        <li className={`mb-4 pr-2 ${burgerConstructorStyles.card}`}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            isLocked={false}
-            text="Мясо бессмертных моллюсков Protostomia"
-            thumbnail={'https://code.s3.yandex.net/react/code/meat-02.png'}
-            price={300}
-          />
-        </li>
-        <li className={`mb-4 pr-2 ${burgerConstructorStyles.card}`}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            isLocked={false}
-            text="Плоды Фалленианского дерева"
-            thumbnail={'https://code.s3.yandex.net/react/code/sp_1.png'}
-            price={80}
-          />
-        </li>
-        <li className={`mb-4 pr-2 ${burgerConstructorStyles.card}`}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            isLocked={false}
-            text="Хрустящие минеральные кольца"
-            thumbnail={'https://code.s3.yandex.net/react/code/mineral_rings.png'}
-            price={80}
-          />
-        </li>
-        <li className={`mb-4 pr-2 ${burgerConstructorStyles.card}`}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            isLocked={false}
-            text="Хрустящие минеральные кольца"
-            thumbnail={'https://code.s3.yandex.net/react/code/mineral_rings.png'}
-            price={80}
-          />
-        </li>
+        {ingredients.map((ingredient) => (
+          <li
+            key={ingredient._id}
+            className={`mb-4 pr-2 ${burgerConstructorStyles.card}`}
+          >
+            <DragIcon type="primary" />
+            <ConstructorElement
+              isLocked={false}
+              text={ingredient.name}
+              thumbnail={ingredient.image}
+              price={ingredient.price}
+            />
+          </li>
+        ))}
       </ul>
       <div className={`mt-4 pr-2 ${burgerConstructorStyles.card} ${burgerConstructorStyles.locked}`}>
         <ConstructorElement
