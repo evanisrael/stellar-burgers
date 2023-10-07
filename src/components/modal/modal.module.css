@@ -1,0 +1,21 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: rgba(28, 28, 33, 1);
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 30px;
+  width: 720px;
+}
+
+.close {
+  position: absolute;
+  top: 60px;
+  right: 40px;
+  background-color: Transparent;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+}

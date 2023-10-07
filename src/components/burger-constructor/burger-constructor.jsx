@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import burgerConstructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import Modal from '../modal/modal';
+import ModalOverlay from '../modal-overlay/modal-overlay';
+import OrderDetails from '../order-details/order-details';
 
 function BurgerConstructor({ ingredients }) {
+  const [isOrderDetailsModalOpen, setIsOrderDetailsModalOpen] = useState(false);
+
+  const handleOpenOrderDetailsModal = () => {
+    setIsOrderDetailsModalOpen(true);
+  };
+
+  const handleCloseOrderDetailsModal = () => {
+    setIsOrderDetailsModalOpen(false);
+  };
+
   return (
     <div className={burgerConstructorStyles.block}>
       <div className={`mb-4 pr-2 ${burgerConstructorStyles.card} ${burgerConstructorStyles.locked}`}>
@@ -44,8 +57,15 @@ function BurgerConstructor({ ingredients }) {
           <p className={`mr-2 text text_type_main-large ${burgerConstructorStyles.number}`}>610</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType='button' type="primary" size="large">Оформить заказ</Button>
+        <Button htmlType='button' type="primary" size="large" onClick={handleOpenOrderDetailsModal}>Оформить заказ</Button>
       </div>
+      {isOrderDetailsModalOpen && (
+        <ModalOverlay onClick={handleCloseOrderDetailsModal}>
+          <Modal onClose={handleCloseOrderDetailsModal}>
+            <OrderDetails />
+          </Modal>
+        </ModalOverlay>
+      )}
     </div>
   );
 }

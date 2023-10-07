@@ -1,18 +1,20 @@
 import React from 'react';
-import cardTypeStyles from './card-type.module.css';
-import Card from '../card/card';
 import PropTypes from 'prop-types';
+import Card from '../card/card';
+import cardTypeStyles from './card-type.module.css';
 
-function CardType({ data, title }) {
+function CardType({ data, title, onItemClick }) {
   return (
-    <div>
-      <h3 className={`text text_type_main-medium`}>{title}</h3>
-      <ul className={`ml-4 mt-6 mb-10 ${cardTypeStyles.list}`}>
-        {data.map((card) => (
-          <Card key={card._id} cardContent={card} />
+    <section>
+      <h2 className="text text_type_main-medium mb-6">{title}</h2>
+      <ul className={cardTypeStyles.list}>
+        {data.map((item) => (
+          <li key={item._id} onClick={() => onItemClick(item)}>
+            <Card cardContent={item} />
+          </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 }
 
@@ -33,6 +35,7 @@ CardType.propTypes = {
     })
   ).isRequired,
   title: PropTypes.string.isRequired,
+  onItemClick: PropTypes.func.isRequired,
 };
 
 export default CardType;
