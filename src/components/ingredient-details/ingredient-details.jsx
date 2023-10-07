@@ -4,9 +4,9 @@ import IngredientDetailsStyles from './ingredient-details.module.css';
 function IngredientDetails({ ingredient }) {
   return (
     <div className={IngredientDetailsStyles.container}>
-      <h2 className={`text text_type_main-large ${IngredientDetailsStyles.name}`}>{ingredient.name}</h2>
+      <h2 className={`text text_type_main-large ${IngredientDetailsStyles.name}`}>Детали ингредиента</h2>
       <img src={ingredient.image_large} alt={ingredient.name} />
-      <p className={`text text_type_main-medium ${IngredientDetailsStyles.type}`}>{ingredient.type}</p>
+      <p className={`text text_type_main-medium ${IngredientDetailsStyles.type}`}>{ingredient.name}</p>
       <ul className={IngredientDetailsStyles.box}>
         <li className={IngredientDetailsStyles.item}>
          <p className={`text text_type_main-default text_color_inactive ${IngredientDetailsStyles.text}`}>Калории,ккал</p>
