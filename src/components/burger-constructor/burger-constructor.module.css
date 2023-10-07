@@ -1,0 +1,38 @@
+.list {
+  list-style-type: none;
+  padding: 0;
+  gap: 16px;
+  height: 464px;
+  overflow-y: scroll;
+}
+
+.block {
+  margin-top: 100px;
+  width: 600px;
+}
+
+.locked {
+  margin-left: 32px;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.order {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: end;
+  padding: 0;
+}
+
+.sum {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
