@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './modal.module.css';
+import { childrenPropType } from '../../utils/prop-types';
 
 const Modal = ({ children, onClose }) => {
   useEffect(() => {
@@ -41,7 +42,7 @@ const Modal = ({ children, onClose }) => {
 };
 
 Modal.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: childrenPropType,
   onClose: PropTypes.func.isRequired,
 };
 

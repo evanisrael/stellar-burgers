@@ -18,4 +18,10 @@
   border: none;
   cursor:pointer;
   overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.close:hover {
+  opacity: 0.6;
 }

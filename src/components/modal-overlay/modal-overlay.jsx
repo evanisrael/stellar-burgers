@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import modalOverlayStyles from './modal-overlay.module.css';
+import { childrenPropType } from '../../utils/prop-types'; 
 
 const ModalOverlay = ({ children }) => {
   return ReactDOM.createPortal(
@@ -12,8 +12,6 @@ const ModalOverlay = ({ children }) => {
   );
 };
 
-ModalOverlay.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+ModalOverlay.propTypes = childrenPropType;
 
 export default ModalOverlay;

@@ -1,5 +1,5 @@
 import headerButtonStyles from './header-button.module.css';
-import PropTypes from 'prop-types';
+import { childrenPropType } from '../../utils/prop-types';
 
 function HeaderButton(props) {
   return (
@@ -9,9 +9,7 @@ function HeaderButton(props) {
   );
 }
 
-HeaderButton.propTypes = {
-  children: PropTypes.node.isRequired
-};
+HeaderButton.propTypes = childrenPropType;
 
 export default HeaderButton;
 
