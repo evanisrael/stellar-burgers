@@ -1,0 +1,28 @@
+.content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: rgba(28, 28, 33, 1);
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 30px;
+  width: 720px;
+  z-index: 1000;
+}
+
+.close {
+  position: absolute;
+  top: 60px;
+  right: 40px;
+  background-color: Transparent;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.close:hover {
+  opacity: 0.6;
+}

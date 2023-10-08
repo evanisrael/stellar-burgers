@@ -1,53 +1,96 @@
-import React, { useState } from 'react';
-import burgerIngredientsStyles from './burger-ingredients.module.css';
+import React, { useState, useEffect } from 'react';
+import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { data } from '../../utils/data';
 import CardType from '../card-type/card-type';
+import { ingredientPropType } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 
-function BurgerIngredients() {
-  const [current, setCurrent] = useState('buns');
+function BurgerIngredients({ data, isLoading, error }) {
+  const [currentTab, setCurrentTab] = useState('buns');
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
+
   const bun = data.filter(item => item.type === 'bun');
   const main = data.filter(item => item.type === 'main');
   const sauce = data.filter(item => item.type === 'sauce');
 
   const handleTabClick = (value) => {
-    setCurrent(value);
+    setCurrentTab(value);
+    scrollToCategory(value);
   };
+
+  const handleIngredientClick = (ingredient) => {
+    setSelectedIngredient(ingredient);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedIngredient(null);
+  };
+
+  const scrollToCategory = (category) => {
+    const categoryContainer = document.getElementById(category);
+    if (categoryContainer) {
+      console.log('Scrolling to category:', category);
+      categoryContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      console.log('Category not found:', category);
+    }
+  };
+
+  useEffect(() => {
+    scrollToCategory(currentTab);
+  }, [currentTab]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <div>
-      <h1 className={`mb-5 mt-10 text text_type_main-large ${burgerIngredientsStyles.title}`}>Соберите бургер</h1>
-      <div className={burgerIngredientsStyles.menu}>
-        <Tab value="buns" active={current === 'buns'} onClick={() => handleTabClick('buns')}>Булки</Tab>
-        <Tab value="sauses" active={current === 'sauses'} onClick={() => handleTabClick('sauses')}>Соусы</Tab>
-        <Tab value="mains" active={current === 'mains'} onClick={() => handleTabClick('mains')}>Начинки</Tab>
+      <h1 className={`mb-5 mt-10 text text_type_main-large`}>Соберите бургер</h1>
+      <div className={styles.menu}>
+        <Tab value="buns" active={currentTab === 'buns'} onClick={() => handleTabClick('buns')}>
+          Булки
+        </Tab>
+        <Tab value="sauces" active={currentTab === 'sauces'} onClick={() => handleTabClick('sauces')}>
+          Соусы
+        </Tab>
+        <Tab value="mains" active={currentTab === 'mains'} onClick={() => handleTabClick('mains')}>
+          Начинки
+        </Tab>
       </div>
-      <div className={`custom-scroll ${burgerIngredientsStyles.container}`}>
-        <CardType data={bun} title="Булки" />
-        <CardType data={sauce} title="Соусы" />
-        <CardType data={main} title="Начинки" />
+      <div className={`custom-scroll ${styles.container}`}>
+        <div id="buns">
+          <CardType data={bun} title="Булки" onItemClick={handleIngredientClick} />
+        </div>
+        <div id="sauces">
+          <CardType data={sauce} title="Соусы" onItemClick={handleIngredientClick} />
+        </div>
+        <div id="mains">
+          <CardType data={main} title="Начинки" onItemClick={handleIngredientClick} />
+        </div>
       </div>
+      {selectedIngredient && (
+        <ModalOverlay onClose={handleCloseModal}>
+          <Modal onClose={handleCloseModal}>
+            <IngredientDetails ingredient={selectedIngredient} />
+          </Modal>
+        </ModalOverlay>
+      )}
     </div>
   );
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-    })
-  ),
+  data: PropTypes.arrayOf(ingredientPropType),
+  isLoading: PropTypes.bool.isRequired,
+  error: PropTypes.instanceOf(Error),
 };
 
 export default BurgerIngredients;
