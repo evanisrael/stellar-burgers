@@ -30,10 +30,10 @@ function BurgerIngredients({ data, isLoading, error }) {
   };
 
   const scrollToCategory = (category) => {
-    const categoryRef = document.getElementById(category);
-    if (categoryRef) {
+    const categoryContainer = document.getElementById(category);
+    if (categoryContainer) {
       console.log('Scrolling to category:', category);
-      categoryRef.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      categoryContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
       console.log('Category not found:', category);
     }
@@ -66,9 +66,15 @@ function BurgerIngredients({ data, isLoading, error }) {
         </Tab>
       </div>
       <div className={`custom-scroll ${styles.container}`}>
-        <CardType data={bun} title="Булки" onItemClick={handleIngredientClick} id="buns" />
-        <CardType data={sauce} title="Соусы" onItemClick={handleIngredientClick} id="sauces" />
-        <CardType data={main} title="Начинки" onItemClick={handleIngredientClick} id="mains" />
+        <div id="buns">
+          <CardType data={bun} title="Булки" onItemClick={handleIngredientClick} />
+        </div>
+        <div id="sauces">
+          <CardType data={sauce} title="Соусы" onItemClick={handleIngredientClick} />
+        </div>
+        <div id="mains">
+          <CardType data={main} title="Начинки" onItemClick={handleIngredientClick} />
+        </div>
       </div>
       {selectedIngredient && (
         <ModalOverlay onClose={handleCloseModal}>
