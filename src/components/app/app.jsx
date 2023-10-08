@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import styles from "./app.module.css";
+import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-
-const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
+import { getIngredients } from '../../utils/burger-api';
 
 function App() {
   const [ingredientsData, setIngredientsData] = useState([]);
@@ -14,15 +13,9 @@ function App() {
   useEffect(() => {
     setIsLoading(true);
 
-    fetch(API_URL)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Ошибка: ${response.status}`);
-        }
-        return response.json();
-      })
+    getIngredients()
       .then((data) => {
-        setIngredientsData(data.data);
+        setIngredientsData(data);
         setIsLoading(false);
       })
       .catch((err) => {
