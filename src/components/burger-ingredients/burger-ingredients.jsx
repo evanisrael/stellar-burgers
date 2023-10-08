@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import CardType from '../card-type/card-type';
@@ -18,6 +18,7 @@ function BurgerIngredients({ data, isLoading, error }) {
 
   const handleTabClick = (value) => {
     setCurrentTab(value);
+    scrollToCategory(value);
   };
 
   const handleIngredientClick = (ingredient) => {
@@ -27,6 +28,20 @@ function BurgerIngredients({ data, isLoading, error }) {
   const handleCloseModal = () => {
     setSelectedIngredient(null);
   };
+
+  const scrollToCategory = (category) => {
+    const categoryRef = document.getElementById(category);
+    if (categoryRef) {
+      console.log('Scrolling to category:', category);
+      categoryRef.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      console.log('Category not found:', category);
+    }
+  };
+
+  useEffect(() => {
+    scrollToCategory(currentTab);
+  }, [currentTab]);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -51,9 +66,9 @@ function BurgerIngredients({ data, isLoading, error }) {
         </Tab>
       </div>
       <div className={`custom-scroll ${styles.container}`}>
-        {currentTab === 'buns' && <CardType data={bun} title="Булки" onItemClick={handleIngredientClick} />}
-        {currentTab === 'sauces' && <CardType data={sauce} title="Соусы" onItemClick={handleIngredientClick} />}
-        {currentTab === 'mains' && <CardType data={main} title="Начинки" onItemClick={handleIngredientClick} />}
+        <CardType data={bun} title="Булки" onItemClick={handleIngredientClick} id="buns" />
+        <CardType data={sauce} title="Соусы" onItemClick={handleIngredientClick} id="sauces" />
+        <CardType data={main} title="Начинки" onItemClick={handleIngredientClick} id="mains" />
       </div>
       {selectedIngredient && (
         <ModalOverlay onClose={handleCloseModal}>

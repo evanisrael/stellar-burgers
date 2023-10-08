@@ -1,4 +1,4 @@
-.modal {
+.content {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -8,6 +8,7 @@
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.3);
   border-radius: 30px;
   width: 720px;
+  z-index: 1000;
 }
 
 .close {
