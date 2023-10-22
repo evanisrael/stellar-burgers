@@ -7,12 +7,16 @@ import OrderDetails from '../order-details/order-details';
 import { IngredientsContext } from '../services/IngredientsContext';
 
 function BurgerConstructor() {
-  const { ingredients, setIngredients } = useContext(IngredientsContext);
+  const { ingredients, loading, error } = useContext(IngredientsContext);
   const [isOrderDetailsModalOpen, setIsOrderDetailsModalOpen] = useState(false);
+  
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  
   const bun = ingredients.find(ingredient => ingredient.type === 'bun');
   const otherIngredients = ingredients.filter(ingredient => ingredient.type !== 'bun');
-
-  const totalCost = ingredients.reduce((sum, ingredient) => sum + ingredient.price, 0);
+  
+  const totalCost = otherIngredients.reduce((sum, ingredient) => sum + ingredient.price, 0) + (bun ? bun.price * 2 : 0);
 
   const handleOpenOrderDetailsModal = () => {
     setIsOrderDetailsModalOpen(true);
