@@ -4,6 +4,7 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { getIngredients } from '../../utils/burger-api';
+import { IngredientsProvider } from '../services/IngredientsContext';
 
 function App() {
   const [ingredientsData, setIngredientsData] = useState([]);
@@ -25,17 +26,19 @@ function App() {
   }, []);
 
   return (
-    <div className={styles.app}>
-      <AppHeader />
-      <main className={styles.main}>
-        <section className={styles.section}>
-          <BurgerIngredients data={ingredientsData} isLoading={isLoading} error={error} />
-        </section>
-        <section className={styles.section}>
-          <BurgerConstructor ingredients={ingredientsData} />
-        </section>
-      </main>
-    </div>
+    <IngredientsProvider>
+      <div className={styles.app}>
+        <AppHeader />
+        <main className={styles.main}>
+          <section className={styles.section}>
+            <BurgerIngredients data={ingredientsData} isLoading={isLoading} error={error} />
+          </section>
+          <section className={styles.section}>
+            <BurgerConstructor ingredients={ingredientsData} />
+          </section>
+        </main>
+      </div>
+    </IngredientsProvider>
   );
 }
 

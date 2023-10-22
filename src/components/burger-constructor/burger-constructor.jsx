@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import burgerConstructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import OrderDetails from '../order-details/order-details';
+import { IngredientsContext } from '../services/IngredientsContext';
 
-function BurgerConstructor({ ingredients }) {
+function BurgerConstructor() {
+  const { ingredients, setIngredients } = useContext(IngredientsContext);
   const [isOrderDetailsModalOpen, setIsOrderDetailsModalOpen] = useState(false);
+  const bun = ingredients.find(ingredient => ingredient.type === 'bun');
+  const otherIngredients = ingredients.filter(ingredient => ingredient.type !== 'bun');
+
+  const totalCost = ingredients.reduce((sum, ingredient) => sum + ingredient.price, 0);
 
   const handleOpenOrderDetailsModal = () => {
     setIsOrderDetailsModalOpen(true);
@@ -18,17 +24,19 @@ function BurgerConstructor({ ingredients }) {
 
   return (
     <div className={burgerConstructorStyles.block}>
-      <div className={`mb-4 pr-2 ${burgerConstructorStyles.card} ${burgerConstructorStyles.locked}`}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text="Краторная булка N-200i (верх)"
-          thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-          price={20}
-        />
-      </div>
+      {bun && (
+        <div className={`mb-4 pr-2 ${burgerConstructorStyles.card} ${burgerConstructorStyles.locked}`}>
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            thumbnail={bun.image}
+            price={bun.price}
+          />
+        </div>
+      )}
       <ul className={`custom-scroll ${burgerConstructorStyles.list}`}>
-        {ingredients.map((ingredient) => (
+        {otherIngredients.map((ingredient) => (
           <li
             key={ingredient._id}
             className={`mb-4 pr-2 ${burgerConstructorStyles.card}`}
@@ -43,18 +51,20 @@ function BurgerConstructor({ ingredients }) {
           </li>
         ))}
       </ul>
-      <div className={`mt-4 pr-2 ${burgerConstructorStyles.card} ${burgerConstructorStyles.locked}`}>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text="Краторная булка N-200i (низ)"
-          thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-          price={20}
-        />
-      </div>
+      {bun && (
+        <div className={`mt-4 pr-2 ${burgerConstructorStyles.card} ${burgerConstructorStyles.locked}`}>
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            thumbnail={bun.image}
+            price={bun.price}
+          />
+        </div>
+      )}
       <div className={`mt-10 pb-10 ${burgerConstructorStyles.order}`}>
         <div className={`${burgerConstructorStyles.sum}`}>
-          <p className={`mr-2 text text_type_main-large ${burgerConstructorStyles.number}`}>610</p>
+          <p className={`mr-2 text text_type_main-large ${burgerConstructorStyles.number}`}>{totalCost}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button htmlType='button' type="primary" size="large" onClick={handleOpenOrderDetailsModal}>Оформить заказ</Button>
